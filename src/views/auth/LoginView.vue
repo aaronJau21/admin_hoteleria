@@ -2,16 +2,22 @@
 import type { LoginDto } from '@/dto'
 import { Field, useForm } from 'vee-validate'
 
-// Services
 import { AuthService } from '@/services/auth/auth.service'
+import { useLocalStorageStore } from '@/stores/localStorage/localStorage.store'
+import { useRouter } from 'vue-router'
+
+const router = useRouter()
+
+// stores
+const useLocalStorage = useLocalStorageStore()
 
 // Logic
 const { handleSubmit } = useForm<LoginDto>()
-
 const onSubmit = handleSubmit(async (values) => {
   const result = await AuthService.login(values)
+  useLocalStorage.setLocal(result)
 
-  console.log(result)
+  router.push({ name: 'home' })
 })
 </script>
 <template>
