@@ -1,9 +1,9 @@
 export interface ILogin {
-  user: User
+  user: IUser
   token: string
 }
 
-export interface User {
+export interface IUser {
   email: string
   name: string
 }

@@ -17,7 +17,7 @@ const onSubmit = handleSubmit(async (values) => {
   const result = await AuthService.login(values)
   useLocalStorage.setLocal(result)
 
-  router.push({ name: 'home' })
+  router.push('/system/home')
 })
 </script>
 <template>
