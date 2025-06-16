@@ -19,6 +19,11 @@ const router = createRouter({
           name: 'home',
           component: () => import('@/views/home/HomeView.vue'),
         },
+        {
+          path: 'rooms/category',
+          name: 'category-room',
+          component: () => import('@/views/rooms/CategoryView.vue'),
+        },
       ],
     },
     {
