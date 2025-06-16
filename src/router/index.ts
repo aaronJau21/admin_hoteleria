@@ -9,9 +9,19 @@ const router = createRouter({
       component: LoginView,
     },
     {
-      path: '/sistem/home',
-      name: 'home',
-      component: () => import('@/views/home/HomeView.vue'),
+      path: '/system',
+      component: () => import('@/layouts/DefaultLayout.vue'),
+      children: [
+        {
+          path: 'home',
+          name: 'home',
+          component: () => import('@/views/home/HomeView.vue'),
+        },
+      ],
+    },
+    {
+      path: '/:pathMatch(.*)*',
+      redirect: { name: 'home' },
     },
   ],
 })
