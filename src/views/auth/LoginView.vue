@@ -35,7 +35,7 @@ const onSubmit = handleSubmit(async (values) => {
         <form @submit.prevent="onSubmit" novalidate>
           <div class="mb-4 text-lg">
             <Field
-              class="rounded-3xl border-none bg-yellow-400 bg-opacity-50 px-6 py-2 text-center text-inherit placeholder-slate-200 shadow-lg outline-none backdrop-blur-md"
+              class="rounded-3xl border-none bg-primary bg-opacity-50 px-6 py-2 text-center text-inherit placeholder-slate-200 shadow-lg outline-none backdrop-blur-md"
               type="email"
               name="email"
               placeholder="id@email.com"
@@ -44,7 +44,7 @@ const onSubmit = handleSubmit(async (values) => {
 
           <div class="mb-4 text-lg">
             <Field
-              class="rounded-3xl border-none bg-yellow-400 bg-opacity-50 px-6 py-2 text-center text-inherit placeholder-slate-200 shadow-lg outline-none backdrop-blur-md"
+              class="rounded-3xl border-none bg-primary bg-opacity-50 px-6 py-2 text-center text-inherit placeholder-slate-200 shadow-lg outline-none backdrop-blur-md"
               type="password"
               name="password"
               placeholder="*********"
@@ -53,7 +53,7 @@ const onSubmit = handleSubmit(async (values) => {
           <div class="mt-8 flex justify-center text-lg text-black">
             <button
               type="submit"
-              class="rounded-3xl bg-yellow-400 bg-opacity-50 px-10 py-2 text-white shadow-xl backdrop-blur-md transition-colors duration-300 hover:bg-yellow-600"
+              class="rounded-3xl bg-secondary bg-opacity-50 px-10 py-2 text-white shadow-xl backdrop-blur-md transition-colors duration-300 hover:bg-yellow-600"
             >
               Login
             </button>

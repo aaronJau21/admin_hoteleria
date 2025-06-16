@@ -1,9 +1,11 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import SidebarComponent from '@/components/ui/sidebar/SidebarComponent.vue'
+</script>
 
 <template>
-  <div>
+  <div class="flex">
+    <SidebarComponent />
     <RouterView />
-    <p>alksdja;slkdjal;dskj</p>
   </div>
 </template>
 

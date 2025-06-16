@@ -1,6 +1,10 @@
 @import 'tailwindcss';
 @plugin "daisyui";
-
-body {
-  @apply bg-gray-300 text-gray-900;
+@plugin "daisyui/theme"{
+  name:'dracula',
+  default: true; /* set as default */
+  prefersdark: true; /* set as default dark mode (prefers-color-scheme:dark) */
+  color-scheme: dracula; /* color of browser-provided UI */
+  --color-primary:oklch(0.3405 0.0645 63.88);
+  --color-secondary:oklch(0.7568 0.0919 72.75);
 }
