@@ -5,7 +5,7 @@ import SidebarComponent from '@/components/ui/sidebar/SidebarComponent.vue'
 <template>
   <div class="flex">
     <SidebarComponent />
-    <div class="container mx-auto">
+    <div class="flex-1 container mx-auto mt-5">
       <RouterView />
     </div>
   </div>
