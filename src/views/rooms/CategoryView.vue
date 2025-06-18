@@ -3,7 +3,7 @@ import TitleComponent from '@/components/ui/title/TitleComponent.vue'
 import { RoomCategoryService } from '@/services'
 import { useQuery } from '@tanstack/vue-query'
 
-const { data } = useQuery({
+const { data, isLoading } = useQuery({
   queryKey: ['categories'],
   queryFn: async () => await RoomCategoryService.getRoomCategories(),
 })
@@ -28,7 +28,12 @@ console.log(data.value)
         </thead>
         <tbody>
           <!-- row 1 -->
-          <tr v-for="category in data" :key="category.id">
+          <tr v-if="isLoading">
+            <td colspan="4" class="text-center">
+              <span class="loading loading-spinner loading-xl text-secondary"></span>
+            </td>
+          </tr>
+          <tr v-else v-for="category in data" :key="category.id">
             <th class="text-center">{{ category.id }}</th>
             <td class="text-center">{{ category.name }}</td>
             <td class="text-center">{{ category.status }}</td>
