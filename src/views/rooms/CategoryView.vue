@@ -1,19 +1,29 @@
 <script setup lang="ts">
+import ModalCategory from '@/components/category/modal/ModalCategory.vue'
 import TitleComponent from '@/components/ui/title/TitleComponent.vue'
 import { RoomCategoryService } from '@/services'
-import { useQuery } from '@tanstack/vue-query'
+import { useMutation, useQuery } from '@tanstack/vue-query'
 
 const { data, isLoading } = useQuery({
   queryKey: ['categories'],
   queryFn: async () => await RoomCategoryService.getRoomCategories(),
 })
 
-console.log(data.value)
+const { mutate } = useMutation({
+  mutationFn: RoomCategoryService.updateStatusRoomCategory,
+  onSuccess: console.log,
+})
+
+const toggleStatus = (categoryId: string) => {
+  mutate(categoryId)
+}
 </script>
 
 <template>
   <section>
-    <TitleComponent title="Categorías" />
+    <TitleComponent title="Categorías">
+      <button class="btn btn-success" onclick="modal_create_category?.showModal()">Crear</button>
+    </TitleComponent>
 
     <div class="overflow-x-auto">
       <table class="table table-zebra">
@@ -36,7 +46,14 @@ console.log(data.value)
           <tr v-else v-for="category in data" :key="category.id">
             <th class="text-center">{{ category.id }}</th>
             <td class="text-center">{{ category.name }}</td>
-            <td class="text-center">{{ category.status }}</td>
+            <td class="text-center">
+              <input
+                @click="toggleStatus(String(category.id))"
+                type="checkbox"
+                :checked="category.status"
+                class="toggle toggle-success"
+              />
+            </td>
             <td class="flex justify-center gap-x-2">
               <button class="btn btn-warning">Actualizar</button>
               <button class="btn btn-error">Eliminar</button>
@@ -45,6 +62,7 @@ console.log(data.value)
         </tbody>
       </table>
     </div>
+    <ModalCategory />
   </section>
 </template>
 

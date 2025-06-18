@@ -4,7 +4,7 @@
 
     <div class="">
       <!-- <button class="bg-success text-primary text-xl px-3 py-1 rounded-2xl">Crear</button> -->
-      <button class="btn btn-success">Crear</button>
+      <slot />
     </div>
   </div>
 </template>
