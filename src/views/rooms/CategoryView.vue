@@ -1,21 +1,62 @@
 <script setup lang="ts">
 import ModalCategory from '@/components/category/modal/ModalCategory.vue'
+import ModalCategoryUpdate from '@/components/category/modal/ModalCategoryUpdate.vue'
 import TitleComponent from '@/components/ui/title/TitleComponent.vue'
 import { RoomCategoryService } from '@/services'
-import { useMutation, useQuery } from '@tanstack/vue-query'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/vue-query'
+import { reactive } from 'vue'
+import { useToast } from 'vue-toastification'
+
+const queryClient = useQueryClient()
+const toast = useToast()
+
+const optionsModalUpdate = reactive<{
+  show: boolean
+  categoryId: number
+}>({
+  show: false,
+  categoryId: 0,
+})
+
+function openModalUpdate(categoryId: number) {
+  optionsModalUpdate.show = true
+  optionsModalUpdate.categoryId = +categoryId
+}
 
 const { data, isLoading } = useQuery({
   queryKey: ['categories'],
   queryFn: async () => await RoomCategoryService.getRoomCategories(),
+  staleTime: 1000 * 60 * 15, // 15 minutes
 })
 
-const { mutate } = useMutation({
+const { mutate: updateStatus } = useMutation({
   mutationFn: RoomCategoryService.updateStatusRoomCategory,
-  onSuccess: console.log,
+  onSuccess: () => {
+    queryClient.invalidateQueries({
+      queryKey: ['categories'],
+    })
+
+    toast.success('Estado actualizado correctamente')
+  },
 })
 
 const toggleStatus = (categoryId: string) => {
-  mutate(categoryId)
+  updateStatus(categoryId)
+}
+
+const { mutate: deleteCategoryMutation } = useMutation({
+  mutationFn: RoomCategoryService.deleteRoomCategory,
+  onSuccess: () => {
+    queryClient.invalidateQueries({
+      queryKey: ['categories'],
+    })
+
+    toast.success('Categoría eliminada correctamente')
+  },
+})
+
+function deleteCategory(id: number) {
+  deleteCategoryMutation(id)
 }
 </script>
 
@@ -55,14 +96,24 @@ const toggleStatus = (categoryId: string) => {
               />
             </td>
             <td class="flex justify-center gap-x-2">
-              <button class="btn btn-warning">Actualizar</button>
-              <button class="btn btn-error">Eliminar</button>
+              <button class="btn btn-warning" @click="openModalUpdate(category.id)">
+                Actualizar
+              </button>
+              <button @click="deleteCategory(category.id)" class="btn btn-error">Eliminar</button>
             </td>
           </tr>
         </tbody>
       </table>
     </div>
+
+    <!-- Modals -->
     <ModalCategory />
+    <div v-if="optionsModalUpdate.show">
+      <ModalCategoryUpdate
+        :optionsModalUpdate="optionsModalUpdate"
+        @close="optionsModalUpdate.show = false"
+      />
+    </div>
   </section>
 </template>
 
